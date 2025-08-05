@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liste de Courses Mobile</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🛒 Mes Listes</h1>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </div>
+
+    <!-- Navigation des listes -->
+    <div class="lists-nav">
+      <div class="lists-tabs" id="listsTabs"></div>
+      <button class="add-list-btn" onclick="ajouterNouvelleListe()">➕ Nouvelle liste</button>
+    </div>
+
+    <!-- Barre de recherche -->
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="🔍 Rechercher un article..." oninput="rechercherArticles()">
+      <div class="status-indicator" id="statusIndicator">📶</div>
+    </div>
+
+    <div class="buttons">
+      <button onclick="ajouterItem()">➕ Ajouter un article</button>
+      <button class="danger" onclick="resetListe()">🗑️ Vider la liste</button>
+    </div>
+
+    <div id="stats"></div>
+    <div id="listeCourses" class="liste-area"></div>
+
+    <div class="share-buttons">
+      <button onclick="copierListe()">📋 Copier la liste</button>
+      <button onclick="envoyerWhatsApp()">📤 WhatsApp</button>
+      <button onclick="envoyerMessage()">📩 Messages</button>
+    </div>
+  </div>
+  <script src="script.js?v=5"></script>
+</body>
+</html>
