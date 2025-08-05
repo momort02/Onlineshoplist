@@ -27,18 +27,9 @@ Elle est optimisée pour **mobile**, mais fonctionne également sur ordinateur.
 
 ---
 
-
-📷 Captures d’écran
-
-(Ajoutez ici vos images du site pour illustrer l’interface)
-
-
----
-
 📜 Licence
 
 Ce projet est sous licence MIT. Vous pouvez l’utiliser, le modifier et le redistribuer librement.
-
 
 ---
 
