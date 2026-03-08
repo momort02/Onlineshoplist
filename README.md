@@ -1,113 +1,49 @@
 <div align="center">
 
-# 🛒 OnlineShopList
+<br/>
 
-**Une application web de listes de courses légère, rapide et mobile-first.**
+```
+ ____  _                 _     _     _
+/ ___|| |__   ___  _ __ | |   (_)___| |_
+\___ \| '_ \ / _ \| '_ \| |   | / __| __|
+ ___) | | | | (_) | |_) | |___| \__ \ |_
+|____/|_| |_|\___/| .__/|_____|_|___/\__|
+                  |_|
+```
 
-[![Live Demo](https://img.shields.io/badge/🌐%20Live%20Demo-momort02.github.io-4CAF50?style=for-the-badge)](https://momort02.github.io/Onlineshoplist)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
-[![HTML](https://img.shields.io/badge/HTML-8%25-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://github.com/momort02/Onlineshoplist)
-[![CSS](https://img.shields.io/badge/CSS-41%25-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://github.com/momort02/Onlineshoplist)
-[![JavaScript](https://img.shields.io/badge/JavaScript-51%25-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://github.com/momort02/Onlineshoplist)
+# \ud83d\uded2 ShopList v3
+
+**Application de listes de courses collaborative et temps r\u00e9el**
+
+[![Firebase](https://img.shields.io/badge/Firebase-10.12-FFCA28?style=flat-square&logo=firebase&logoColor=black)](https://firebase.google.com)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/fr/docs/Web/JavaScript)
+[![PWA](https://img.shields.io/badge/PWA-Ready-5A0FC8?style=flat-square&logo=pwa&logoColor=white)](https://web.dev/progressive-web-apps/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-3ecf8e?style=flat-square)](LICENSE)
+
+**[\ud83c\udf10 Voir l'application](https://momort02.github.io/Onlineshoplist)** \u00b7 **[\ud83d\udc1b Signaler un bug](https://github.com/momort02/Onlineshoplist/issues)**
+
+<br/>
+
+<img src="https://img.shields.io/badge/HTML-8%25-E34F26?style=flat-square&logo=html5&logoColor=white" />
+<img src="https://img.shields.io/badge/CSS-41%25-1572B6?style=flat-square&logo=css3&logoColor=white" />
+<img src="https://img.shields.io/badge/JavaScript-51%25-F7DF1E?style=flat-square&logo=javascript&logoColor=black" />
 
 </div>
 
 ---
 
-## 📖 Présentation
+## \ud83e\udded Vue d'ensemble
 
-**OnlineShopList** est une application web pensée pour simplifier vos courses au quotidien. Sans installation, sans compte, elle fonctionne directement depuis votre navigateur — idéale sur smartphone comme sur ordinateur.
+**ShopList v3** est une application web **mobile-first** pour g\u00e9rer vos listes de courses de mani\u00e8re collaborative. Gr\u00e2ce \u00e0 Firebase, chaque modification est r\u00e9percut\u00e9e en **temps r\u00e9el** sur tous les appareils connect\u00e9s \u2014 plus besoin d'envoyer des screenshots ou de dicter la liste au t\u00e9l\u00e9phone.
 
-Gérez plusieurs listes en parallèle, cochez vos articles au fur et à mesure, et partagez votre liste en un seul tap.
-
----
-
-## ✨ Fonctionnalités
-
-| Fonctionnalité | Description |
-|---|---|
-| 📝 **Listes multiples** | Créez et gérez plusieurs listes indépendantes |
-| ✅ **Cases à cocher** | Marquez vos articles au fur et à mesure de vos achats |
-| ➕ **Ajout rapide** | Ajoutez un article en un clic depuis l'interface |
-| 🗑️ **Vider la liste** | Réinitialisez une liste en un seul tap |
-| 📋 **Copier la liste** | Copiez votre liste dans le presse-papier |
-| 📤 **Partage WhatsApp** | Envoyez votre liste directement via WhatsApp |
-| 📩 **Partage Messages** | Envoyez votre liste par SMS / iMessage |
-| 🌙 **Mode sombre** | Interface adaptable selon vos préférences |
-| 📶 **Mode hors-ligne** | Fonctionne sans connexion internet |
-| 💾 **Sauvegarde locale** | Vos listes persistent entre les sessions (localStorage) |
-| 📱 **Mobile-first** | Interface optimisée pour smartphone |
+L'application fonctionne sans installation, directement depuis le navigateur, et supporte le **mode hors-ligne** gr\u00e2ce au cache local.
 
 ---
 
-## 🚀 Démo en ligne
+## \u2728 Fonctionnalit\u00e9s
 
-Accédez directement à l'application sans installation :
-
-👉 **[momort02.github.io/Onlineshoplist](https://momort02.github.io/Onlineshoplist)**
-
----
-
-## 🛠️ Technologies utilisées
-
-- **HTML5** — Structure de l'application
-- **CSS3** — Mise en page responsive et thème sombre
-- **JavaScript (Vanilla)** — Logique de l'application, gestion des listes, stockage local
-
-Aucune dépendance externe, aucun framework — le projet est léger et autonome.
-
----
-
-## 📂 Structure du projet
-
-```
-Onlineshoplist/
-├── index.html      # Structure principale de l'application
-├── style.css       # Styles et thème (clair / sombre)
-└── script.js       # Logique métier (listes, stockage, partage)
-```
-
----
-
-## ⚙️ Installation locale
-
-Aucune installation requise. Il suffit de cloner le dépôt et d'ouvrir le fichier HTML :
-
-```bash
-git clone https://github.com/momort02/Onlineshoplist.git
-cd Onlineshoplist
-open index.html   # ou double-cliquez sur le fichier
-```
-
----
-
-## 📖 Guide d'utilisation
-
-1. **Ouvrez l'application** depuis votre navigateur (mobile ou desktop)
-2. **Créez une nouvelle liste** via le bouton ➕ Nouvelle liste
-3. **Ajoutez vos articles** avec le bouton ➕ Ajouter un article
-4. **Cochez les articles** au fur et à mesure de vos achats
-5. **Partagez ou copiez** votre liste en un tap (WhatsApp, Messages, presse-papier)
-6. **Videz la liste** une fois vos courses terminées
-
----
-
-## 📜 Licence
-
-Ce projet est distribué sous licence **MIT**.  
-Vous êtes libre de l'utiliser, le modifier et le redistribuer.
-
----
-
-## 👤 Auteur
-
-**Amaury Goemaere**  
-GitHub : [@momort02](https://github.com/momort02)
-
----
-
-<div align="center">
-
-*Fait avec ❤️ pour simplifier les courses du quotidien.*
-
-</div>
+### \ud83d\udd10 Authentification
+- Cr\u00e9ation de compte avec pr\u00e9nom, email et mot de passe
+- Connexion s\u00e9curis\u00e9e via **Firebase Auth**
+- Session persistante entre les visites
+- Messages d'erreur explicites (email inval
