@@ -2,43 +2,246 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Liste de Courses Mobile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d0f14" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="ShopList" />
+  <meta name="description" content="Liste de courses collaborative en temps réel" />
+
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <title>ShopList</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>🛒 Mes Listes</h1>
-      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-    </div>
 
-    <!-- Navigation des listes -->
-    <div class="lists-nav">
-      <div class="lists-tabs" id="listsTabs"></div>
-      <button class="add-list-btn" onclick="ajouterNouvelleListe()">➕ Nouvelle liste</button>
-    </div>
+  <!-- LOADING -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-spinner"></div>
+  </div>
 
-    <!-- Barre de recherche -->
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="🔍 Rechercher un article..." oninput="rechercherArticles()">
-      <div class="status-indicator" id="statusIndicator">📶</div>
-    </div>
-
-    <div class="buttons">
-      <button onclick="ajouterItem()">➕ Ajouter un article</button>
-      <button class="danger" onclick="resetListe()">🗑️ Vider la liste</button>
-    </div>
-
-    <div id="stats"></div>
-    <div id="listeCourses" class="liste-area"></div>
-
-    <div class="share-buttons">
-      <button onclick="copierListe()">📋 Copier la liste</button>
-      <button onclick="envoyerWhatsApp()">📤 WhatsApp</button>
-      <button onclick="envoyerMessage()">📩 Messages</button>
+  <!-- AUTH -->
+  <div class="auth-screen hidden" id="authScreen">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <span class="auth-logo-icon">🛒</span>
+        <span class="auth-logo-text">ShopList</span>
+      </div>
+      <p class="auth-tagline">Courses collaboratives en temps réel</p>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Connexion</button>
+        <button class="auth-tab" data-tab="register">Créer un compte</button>
+      </div>
+      <!-- Login -->
+      <div class="auth-form" id="formLogin">
+        <input class="auth-input" id="loginEmail" type="email" placeholder="Email" autocomplete="email" />
+        <input class="auth-input" id="loginPassword" type="password" placeholder="Mot de passe" autocomplete="current-password" />
+        <div class="auth-error" id="loginError"></div>
+        <button class="auth-submit" id="btnLogin">Se connecter</button>
+      </div>
+      <!-- Register -->
+      <div class="auth-form hidden" id="formRegister">
+        <input class="auth-input" id="regName" type="text" placeholder="Votre prénom" autocomplete="given-name" />
+        <input class="auth-input" id="regEmail" type="email" placeholder="Email" autocomplete="email" />
+        <input class="auth-input" id="regPassword" type="password" placeholder="Mot de passe (6 car. min.)" autocomplete="new-password" />
+        <div class="auth-error" id="registerError"></div>
+        <button class="auth-submit" id="btnRegister">Créer mon compte</button>
+      </div>
     </div>
   </div>
-  <script src="script.js?v=5"></script>
+
+  <!-- MAIN APP -->
+  <div class="main-app hidden" id="mainApp">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-user">
+          <div class="user-avatar" id="userAvatar">?</div>
+          <div class="user-info">
+            <span class="user-name" id="userName">…</span>
+            <span class="user-email" id="userEmail">…</span>
+          </div>
+        </div>
+        <button class="icon-btn" id="closeSidebar" aria-label="Fermer">✕</button>
+      </div>
+      <div class="sidebar-section-title">Mes listes</div>
+      <div class="lists-container" id="listsContainer"></div>
+      <div class="sidebar-footer">
+        <button class="btn-new-list" id="btnNewList"><span>＋</span> Nouvelle liste</button>
+        <button class="btn-logout" id="btnLogout"><span>⎋</span> Déconnexion</button>
+      </div>
+    </aside>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- APP -->
+    <div class="app">
+
+      <header class="header">
+        <button class="icon-btn menu-btn" id="menuBtn">
+          <span class="hamburger"></span><span class="hamburger"></span><span class="hamburger"></span>
+        </button>
+        <div class="header-title-wrap">
+          <h1 class="app-title" id="currentListName">—</h1>
+          <span class="collab-badge hidden" id="collabBadge">👥 Partagée</span>
+        </div>
+        <div class="header-actions">
+          <div class="sync-dot" id="syncDot"></div>
+          <button class="icon-btn" id="btnInvite" title="Inviter des membres">🔗</button>
+          <button class="icon-btn" id="btnShare" title="Exporter">⬆</button>
+          <button class="icon-btn" id="btnDeleteList" title="Supprimer">🗑</button>
+        </div>
+      </header>
+
+      <div class="members-bar hidden" id="membersBar">
+        <div class="members-avatars" id="membersAvatars"></div>
+        <span class="members-label" id="membersLabel"></span>
+      </div>
+
+      <div class="budget-banner">
+        <div class="budget-info">
+          <span class="budget-label">Budget</span>
+          <span class="budget-value" id="budgetDisplay">—</span>
+        </div>
+        <div class="budget-progress-wrap">
+          <div class="budget-bar"><div class="budget-fill" id="budgetFill"></div></div>
+          <span class="budget-spent" id="budgetSpent">0,00 €</span>
+        </div>
+        <button class="budget-edit-btn" id="btnEditBudget">✏</button>
+      </div>
+
+      <div class="filters-wrap">
+        <div class="filters" id="filters">
+          <button class="filter-chip active" data-filter="all">Tout</button>
+          <button class="filter-chip" data-filter="todo">À acheter</button>
+          <button class="filter-chip" data-filter="done">Achetés</button>
+        </div>
+      </div>
+
+      <div class="stats-bar">
+        <span id="statsText">0 article</span>
+        <span id="statsTotal" class="stats-total">—</span>
+      </div>
+
+      <main class="items-list" id="itemsList">
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">🛒</div>
+          <p class="empty-title">Liste vide</p>
+          <p class="empty-sub">Ajoute ton premier article ci-dessous</p>
+        </div>
+      </main>
+
+      <div class="add-form-wrap">
+        <form class="add-form" id="addForm" autocomplete="off">
+          <div class="add-row">
+            <input class="add-input" id="addName" type="text" placeholder="Article…" required />
+            <input class="add-qty" id="addQty" type="number" placeholder="Qté" min="0.01" step="any" value="1" />
+          </div>
+          <div class="add-row">
+            <select class="add-select" id="addCategory">
+              <option value="Fruits &amp; Légumes">🥦 Fruits &amp; Légumes</option>
+              <option value="Viandes &amp; Poissons">🥩 Viandes &amp; Poissons</option>
+              <option value="Produits Laitiers">🥛 Produits Laitiers</option>
+              <option value="Boulangerie">🍞 Boulangerie</option>
+              <option value="Épicerie">🫙 Épicerie</option>
+              <option value="Boissons">🥤 Boissons</option>
+              <option value="Surgelés">❄️ Surgelés</option>
+              <option value="Hygiène">🧴 Hygiène</option>
+              <option value="Maison">🏠 Maison</option>
+              <option value="Autre">📦 Autre</option>
+            </select>
+            <input class="add-price" id="addPrice" type="number" placeholder="Prix €" min="0" step="0.01" />
+            <button class="add-btn" type="submit">＋</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+  <div class="modal-overlay" id="modalNewList">
+    <div class="modal">
+      <h2 class="modal-title">Nouvelle liste</h2>
+      <input class="modal-input" id="newListName" type="text" placeholder="Nom de la liste…" />
+      <div class="modal-actions">
+        <button class="btn-ghost" id="cancelNewList">Annuler</button>
+        <button class="btn-primary" id="confirmNewList">Créer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalBudget">
+    <div class="modal">
+      <h2 class="modal-title">Définir un budget</h2>
+      <input class="modal-input" id="budgetInput" type="number" placeholder="Budget en €" min="0" step="0.01" />
+      <div class="modal-actions">
+        <button class="btn-ghost" id="cancelBudget">Annuler</button>
+        <button class="btn-primary" id="confirmBudget">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalEdit">
+    <div class="modal">
+      <h2 class="modal-title">Modifier l'article</h2>
+      <input class="modal-input" id="editName" type="text" placeholder="Nom" />
+      <div class="modal-row">
+        <input class="modal-input half" id="editQty" type="number" placeholder="Qté" min="0.01" step="any" />
+        <input class="modal-input half" id="editPrice" type="number" placeholder="Prix €" min="0" step="0.01" />
+      </div>
+      <select class="modal-input" id="editCategory">
+        <option value="Fruits &amp; Légumes">🥦 Fruits &amp; Légumes</option>
+        <option value="Viandes &amp; Poissons">🥩 Viandes &amp; Poissons</option>
+        <option value="Produits Laitiers">🥛 Produits Laitiers</option>
+        <option value="Boulangerie">🍞 Boulangerie</option>
+        <option value="Épicerie">🫙 Épicerie</option>
+        <option value="Boissons">🥤 Boissons</option>
+        <option value="Surgelés">❄️ Surgelés</option>
+        <option value="Hygiène">🧴 Hygiène</option>
+        <option value="Maison">🏠 Maison</option>
+        <option value="Autre">📦 Autre</option>
+      </select>
+      <div class="modal-actions">
+        <button class="btn-ghost" id="cancelEdit">Annuler</button>
+        <button class="btn-primary" id="confirmEdit">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVITE LINK MODAL -->
+  <div class="modal-overlay" id="modalInvite">
+    <div class="modal">
+      <h2 class="modal-title">🔗 Inviter des membres</h2>
+      <p class="modal-desc">Toute personne avec ce lien peut rejoindre et modifier la liste en temps réel.</p>
+      <div class="invite-link-wrap">
+        <input class="modal-input invite-link-input" id="inviteLinkInput" type="text" readonly />
+        <button class="invite-copy-btn" id="btnCopyInvite">📋</button>
+      </div>
+      <div class="share-btns" style="margin-top:12px">
+        <button class="share-btn whatsapp" id="inviteWhatsapp"><span class="share-icon">💬</span>WhatsApp</button>
+        <button class="share-btn sms" id="inviteSMS"><span class="share-icon">📩</span>SMS</button>
+      </div>
+      <button class="btn-ghost" id="cancelInvite" style="margin-top:12px;width:100%">Fermer</button>
+    </div>
+  </div>
+
+  <!-- EXPORT MODAL -->
+  <div class="modal-overlay" id="modalShare">
+    <div class="modal">
+      <h2 class="modal-title">Exporter la liste</h2>
+      <div class="share-btns">
+        <button class="share-btn whatsapp" id="shareWhatsapp"><span class="share-icon">💬</span>WhatsApp</button>
+        <button class="share-btn sms" id="shareSMS"><span class="share-icon">📩</span>SMS</button>
+        <button class="share-btn copy" id="shareCopy"><span class="share-icon">📋</span>Copier</button>
+      </div>
+      <button class="btn-ghost" id="cancelShare" style="margin-top:12px;width:100%">Fermer</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js" type="module"></script>
 </body>
 </html>
